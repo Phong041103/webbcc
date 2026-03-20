@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách sản phẩm</title>
+</head>
+<body>
+    <h1>Danh sách sản phẩm</h1>
+    <div id="product-list"></div>
+
+    <script>
+        // Hàm lấy danh sách sản phẩm từ API
+        async function fetchProducts() {
+            try {
+                const response = await fetch('http://localhost/demo_webcc_api/api/plant/read.php'); // Đường dẫn tới API
+                if (!response.ok) {
+                    throw new Error('Lỗi khi lấy dữ liệu từ API');
+                }
+                const data = await response.json();
+                displayProducts(data.plant); // Truy cập vào thuộc tính 'plant'
+            } catch (error) {
+                console.error('Lỗi:', error);
+                document.getElementById('product-list').innerHTML = '<p>Không thể tải danh sách sản phẩm.</p>';
+            }
+        }
+    
+        // Hàm hiển thị danh sách sản phẩm
+        function displayProducts(products) {
+            const productList = document.getElementById('product-list');
+            if (!products || products.length === 0) {
+                productList.innerHTML = '<p>Không có sản phẩm nào.</p>';
+                return;
+            }
+    
+            const ul = document.createElement('ul');
+            products.forEach(product => {
+                const li = document.createElement('li');
+                li.textContent = `${product.name} - ${parseFloat(product.price).toLocaleString()} VND`;
+                // Thêm các thuộc tính khác nếu cần thiết
+                li.textContent += ` - ${product.quantity}`; // Ví dụ thêm mô tả sản phẩm
+                li.textContent += ` - ${product.category_id}`; // Ví dụ thêm danh mục sản phẩm
+                li.textContent += ` - ${product.image_url}`; // Ví dụ thêm hình ảnh sản phẩm
+                ul.appendChild(li);
+            });
+            productList.appendChild(ul);
+        }
+    
+        // Gọi hàm khi tải trang
+        fetchProducts();
+    </script>
+</body>
+</html>
