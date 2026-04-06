@@ -51,7 +51,7 @@ class CheckoutController extends Controller
 
         if ($request->option == 'cod') {
             $cart = session('cart', []);
-            foreach ($cart as $id => $item) {\App\Models\Products::where('id', $id)->decrement('soluong', $item['quantity']);
+            foreach ($cart as $id => $item) {\App\Models\Products::where('id', $id)->decrement('quantity', $item['quantity']);
             }
             session()->forget('cart');
             return redirect()->route('bill', $order->id)->with('success', 'Đặt hàng thành công!');
