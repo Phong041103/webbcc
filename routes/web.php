@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\front\Homecontroller as FrontHomecontroller;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\VNPayController;
@@ -38,6 +39,7 @@ Route::get('/bill/{id}', [CheckoutController::class, 'bill'])->name('bill');
 
 Route::resource('categories', CategoryController::class);
 Route::resource('products', ProductController::class);
+Route::resource('orders', OrderController::class);
 
 Route::get('/home', function () {
     return view('layouts.app');

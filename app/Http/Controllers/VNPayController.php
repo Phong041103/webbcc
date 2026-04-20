@@ -10,6 +10,7 @@ class VNPayController extends Controller
     // Thêm tham số $id để nhận ID đơn hàng từ URL
     public function vnpay_payment(Request $request, $id) 
     {
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
         // 1. Tìm đơn hàng trong Database
         $order = Order::findOrFail($id);
 
